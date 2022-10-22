@@ -3,7 +3,10 @@ version: "3.0"
 services:
   blessing:
     container_name: blessing
-    build: ./Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
     ports:
       - "58030:8000"
     volumes:
