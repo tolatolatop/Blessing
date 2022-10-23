@@ -11,7 +11,7 @@ from .models import Search
 
 
 def call_snscrape(model: Search):
-    cmd = 'snscrape --max-results 20 --jsonl %s' % Search.query
+    cmd = 'snscrape --max-results 20 --jsonl %s' % model.query
     cmd = shlex.split(cmd)
     p = sp.Popen(cmd, shell=False, stdout=sp.PIPE, stderr=sp.PIPE)
     out, err = p.communicate()
