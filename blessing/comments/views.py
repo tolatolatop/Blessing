@@ -37,7 +37,7 @@ class ReportDetailView(DetailView):
         report_obj: Report = context['object']
         tweets = Tweet.objects.filter(search=report_obj.search)
 
-        paginator = Paginator(tweets, 3)
+        paginator = Paginator(tweets, 40)
         page_number = self.request.GET.get('page')
         tweets = paginator.get_page(page_number)
 
