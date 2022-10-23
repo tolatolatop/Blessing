@@ -20,7 +20,7 @@ class CommentForm(forms.Form):
         links = self.cleaned_data['links']
         comment = Comment(name=name, type=comment_type, description=description)
         t_ids = [int(i) for i in links.split(',')]
-        tweets = Tweet.object.filter(pk__in=t_ids)
+        tweets = Tweet.objects.filter(pk__in=t_ids)
 
         links = []
         for tweet in tweets:
