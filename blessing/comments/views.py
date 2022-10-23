@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
@@ -24,7 +25,7 @@ class CommentFormView(FormView):
         # It should return an HttpResponse.
         form.create_comment()
         super().form_valid(form)
-        return form.get_success_url()
+        return HttpResponseRedirect(form.get_success_url())
 
 
 class ReportDetailView(DetailView):
