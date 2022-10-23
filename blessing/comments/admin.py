@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import LabelModel
 
-# Register your models here.
+
+@admin.register(LabelModel)
+class LabelAdmin(admin.ModelAdmin):
+    pass
