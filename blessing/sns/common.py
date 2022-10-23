@@ -23,19 +23,21 @@ def call_snscrape(model: Search):
 
 
 def clean_tweet_data(t):
-    for i in ['_type', 'renderedContent', 'user', 'conversationId', 'lang', 'source', 'sourceUrl', 'sourceLabel',
+    t["username"] = t["user"]["username"]
+    t['t_id'] = t['id']
+    for i in ['id', '_type', 'renderedContent', 'user', 'conversationId', 'lang', 'source', 'sourceUrl', 'sourceLabel',
               'outlinks', 'tcooutlinks', 'retweetedTweet', 'quotedTweet', 'inReplyToTweetId', 'inReplyToUser',
               'mentionedUsers', 'coordinates', 'place', 'hashtags', 'cashtags']:
         del t[i]
     return t
 
 
-def save_tweet(tweet_list):
+def save_tweet(search_obj, tweet_list):
     res = []
     for t in tweet_list:
-        t["username"] = t["user"]["username"]
         # bad code
         t = clean_tweet_data(t)
+        t['search'] = search_obj
         obj = Tweet(**t)
         obj.save()
         res.append(obj)

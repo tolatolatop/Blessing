@@ -19,7 +19,7 @@ class SearchCreateView(CreateView):
     def form_valid(self, form):
         resp = super().form_valid(form)
         result = call_snscrape(self.object)
-        tweets = save_tweet(result)
+        tweets = save_tweet(self.object, result)
         return resp
 
 
@@ -33,7 +33,7 @@ class SearchDetailView(DetailView):
         now = datetime.now(timezone.utc)
         if (now - search_obj.modified) > life:
             result = call_snscrape(search_obj)
-            tweets = save_tweet(result)
+            tweets = save_tweet(self.object, result)
         else:
             tweets = Tweet.objects.filter(search=search_obj)
         context["tweets"] = tweets
