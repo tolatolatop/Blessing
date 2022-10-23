@@ -39,11 +39,10 @@ class ReportDetailView(DetailView):
 
         paginator = Paginator(tweets, 3)
         page_number = self.request.GET.get('page')
-        tweets = paginator.page(page_number)
+        tweets = paginator.get_page(page_number)
 
         context["search"] = report_obj.search
         context["tweets"] = tweets
-        context["page_obj"] = paginator
         rcf = ReportCommentForm()
         rcf.fields["report"].initial = report_obj.pk
         context['comment_form'] = rcf
