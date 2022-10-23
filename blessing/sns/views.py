@@ -9,7 +9,7 @@ from .models import Search
 class SearchCreateView(CreateView):
     model = Search
     fields = ('name', 'query')
-    template_name = 'search.html'
+    template_name = 'sns/search.html'
 
     def form_valid(self, form):
         return super().form_valid(form)
