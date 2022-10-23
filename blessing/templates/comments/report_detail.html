@@ -41,7 +41,7 @@
   <ul>
   {% for tweet in tweets %}
     <li>
-      <input name="tweet_id" type="checkbox" value="{{ tweet.id }}" onclick="data_choice({{tweet.id}})" />
+      <input name="tweet_id" type="checkbox" value="{{ tweet.id }}" onclick="data_choice(this, {{tweet.id}})" />
       <a href="{{ tweet.url }}">{{ tweet.url }}</a> ({{tweet.username}} - {{tweet.last_comments.type}})
     </li>
   {% endfor %}
