@@ -23,7 +23,6 @@ class SearchDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        obj = context["search"]
-        result = call_snscrape(obj)
+        result = call_snscrape(self.get_object())
         context["result"] = json.dumps(result, ensure_ascii=False, indent=2).encode('utf-8')
         return context
