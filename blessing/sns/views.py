@@ -1,12 +1,14 @@
 import json
+from datetime import datetime, timedelta
 
 from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import DetailView, CreateView
 
-from .common import call_snscrape
+from .common import call_snscrape, save_tweet
 from .models import Search
+from comments.models import Tweet
 
 
 class SearchCreateView(CreateView):
@@ -23,7 +25,13 @@ class SearchDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        obj = context['object']
-        result = call_snscrape(obj)
-        context["result"] = json.dumps(result, ensure_ascii=False, indent=2)
+        search_obj: Search = context['object']
+        life = timedelta(days=1)
+        now = datetime.now()
+        if (now - search_obj.modified) > life:
+            result = call_snscrape(search_obj)
+            tweets = save_tweet(result)
+        else:
+            tweets = Tweet.objects.filter(search=search_obj)
+        context["tweets"] = tweets
         return context

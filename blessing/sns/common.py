@@ -8,6 +8,7 @@ import shlex
 import subprocess as sp
 
 from .models import Search
+from comments.models import Tweet
 
 
 def call_snscrape(model: Search):
@@ -19,3 +20,13 @@ def call_snscrape(model: Search):
         result = [json.loads(line) for line in out.decode().splitlines()]
         return result
     raise RuntimeError(' '.join(cmd), err)
+
+
+def save_tweet(tweet_list):
+    res = []
+    for t in tweet_list:
+        t["username"] = t["user"]["username"]
+        obj = Tweet(**t)
+        obj.save()
+        res.append(obj)
+    return res

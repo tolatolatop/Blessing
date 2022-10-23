@@ -2,4 +2,14 @@
 <p>{{ search.query }}</p>
 <p>modified: {{ search.modified }}</p>
 <h1>Result</h1>
-<pre>{{ result }}</pre>
+{% if tweets %}
+<ul>
+{% for tweet in tweets %}
+  <li>
+    <a href="{{ tweet.url }}">{{ tweet.url }}</a> ({{tweet.username}})
+  </li>
+{% endfor %}
+</ul>
+{% else %}
+<p>There are no tweet in the database.</p>
+{% endif %}
