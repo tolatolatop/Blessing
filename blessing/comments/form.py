@@ -4,7 +4,7 @@
 # @Author  : tolatolatop
 # @File    : form.py
 from django import forms
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 from .models import Comment, Link, Tweet
 
