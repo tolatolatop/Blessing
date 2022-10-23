@@ -6,7 +6,7 @@
 <ul>
 {% for tweet in tweets %}
   <li>
-    <a href="{{ tweet.url }}">{{ tweet.url }}</a> ({{tweet.username}})
+    <a href="{{ tweet.url }}">{{ tweet.url }}</a> ({{tweet.username}} - {{tweet.last_comments.type}})
   </li>
 {% endfor %}
 </ul>
