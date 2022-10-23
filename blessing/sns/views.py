@@ -8,7 +8,7 @@ from .models import Search
 
 class SearchCreateView(CreateView):
     model = Search
-    fields = ['name', 'query']
+    fields = ('name', 'query')
     template_name = 'search.html'
 
     def form_valid(self, form):
