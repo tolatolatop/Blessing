@@ -10,7 +10,7 @@ from .models import Comment, Link, Tweet
 class CommentForm(forms.Form):
     name = forms.CharField(max_length=30)
     type = forms.CharField(max_length=10)
-    description = forms.CharField(max_length=255, blank=True)
+    description = forms.CharField(max_length=255)
     link = forms.CharField(max_length=2048)
 
     def create_comment(self):
