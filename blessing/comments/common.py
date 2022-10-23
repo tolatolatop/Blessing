@@ -35,7 +35,8 @@ def export_excel(request, report_id):
     for row, t in enumerate(tweets):
         for col, h in enumerate(headers):
             worksheet.write(row, col, str(getattr(t, h)))
-        worksheet.write(row, len_headers, t.last_comments.description)
+        if t.last_comments is not None:
+            worksheet.write(row, len_headers, t.last_comments.description)
     workbook.close()
     buffer.seek(0)
 
