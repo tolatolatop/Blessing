@@ -19,7 +19,7 @@
   </form>
 
   <h1>Comments</h1>
-  <form method="post">{% csrf_token %}
+  <form method="post" action="{% url 'comment-form' %}">{% csrf_token %}
       {{ comment_form.as_p }}
       <input type="submit" value="提交评论">
   </form>
