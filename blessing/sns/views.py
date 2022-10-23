@@ -17,7 +17,10 @@ class SearchCreateView(CreateView):
     template_name = 'sns/search.html'
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        resp = super().form_valid(form)
+        result = call_snscrape(self.object)
+        tweets = save_tweet(result)
+        return resp
 
 
 class SearchDetailView(DetailView):
