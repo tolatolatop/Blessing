@@ -17,15 +17,14 @@ class LabelDetailView(DetailView):
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'
     form_class = ReportCommentForm
+    success_url = 'nothing'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.create_comment()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return self.get_form().get_success_url()
+        super().form_valid(form)
+        return form.get_success_url()
 
 
 class ReportDetailView(DetailView):
