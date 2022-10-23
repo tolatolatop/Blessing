@@ -11,11 +11,15 @@ class CommentForm(forms.Form):
     name = forms.CharField(max_length=30)
     type = forms.CharField(max_length=10)
     description = forms.CharField(max_length=255)
-    link = forms.CharField(max_length=2048)
+    links = forms.CharField(max_length=2048)
 
     def create_comment(self):
-        comment = Comment(name=self.name, type=self.type, description=self.description)
-        t_ids = [int(i) for i in self.link.split(',')]
+        name = self.cleaned_data['name']
+        comment_type = self.cleaned_data['type']
+        description = self.cleaned_data['description']
+        links = self.cleaned_data['links']
+        comment = Comment(name=name, type=comment_type, description=description)
+        t_ids = [int(i) for i in links.split(',')]
         tweets = Tweet.object.filter(pk__in=t_ids)
 
         links = []
