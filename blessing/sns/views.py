@@ -1,5 +1,5 @@
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from django.shortcuts import render
 
@@ -27,7 +27,7 @@ class SearchDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         search_obj: Search = context['object']
         life = timedelta(days=1)
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         if (now - search_obj.modified) > life:
             result = call_snscrape(search_obj)
             tweets = save_tweet(result)
