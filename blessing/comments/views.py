@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from django.utils import timezone
+from django.views.generic.detail import DetailView
 
-# Create your views here.
+from .models import LabelModel
+
+
+class LabelDetailView(DetailView):
+    model = LabelModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
