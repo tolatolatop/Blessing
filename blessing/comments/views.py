@@ -38,6 +38,6 @@ class ReportDetailView(DetailView):
         context["search"] = report_obj.search
         context["tweets"] = tweets
         rcf = ReportCommentForm()
-        rcf.report.initial = report_obj.pk
+        rcf.fields["report"].initial = report_obj.pk
         context['comment_form'] = rcf
         return context
