@@ -8,7 +8,7 @@ from .models import Comment, Link, Tweet
 
 
 class CommentForm(forms.Form):
-    name = forms.CharField(max_length=30, unique=True)
+    name = forms.CharField(max_length=30)
     type = forms.CharField(max_length=10)
     description = forms.CharField(max_length=255, blank=True)
     link = forms.CharField(max_length=2048)
