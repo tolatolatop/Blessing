@@ -15,7 +15,7 @@ class LabelDetailView(DetailView):
 
 
 class CommentFormView(FormView):
-    template_name = '/comments/comment.html'
+    template_name = 'comments/comment.html'
     form_class = CommentForm
 
     def form_valid(self, form):
