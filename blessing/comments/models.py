@@ -10,6 +10,12 @@ class LabelModel(models.Model):
     description = models.CharField(max_length=255, blank=True)
 
 
+class Comment(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    type = models.CharField(max_length=10)
+    description = models.CharField(max_length=255, blank=True)
+
+
 class Tweet(models.Model):
     url = models.CharField(max_length=1024, unique=True)
     date = models.DateTimeField()
@@ -22,3 +28,9 @@ class Tweet(models.Model):
     quoteCount = models.IntegerField()
     media = models.JSONField(null=True)
     search = models.ForeignKey(Search, on_delete=models.CASCADE)
+    last_comments = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True)
+
+
+class Link(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
