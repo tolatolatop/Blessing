@@ -34,7 +34,7 @@ def export_excel(request, report_id):
     len_headers = len(headers)
     for row, t in enumerate(tweets):
         for col, h in enumerate(headers):
-            worksheet.write(row, col, getattr(t, h))
+            worksheet.write(row, col, str(getattr(t, h)))
         worksheet.write(row, len_headers, t.last_comments.description)
     workbook.close()
     buffer.seek(0)
