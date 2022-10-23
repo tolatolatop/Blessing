@@ -20,5 +20,5 @@ class Tweet(models.Model):
     retweetCount = models.IntegerField()
     likeCount = models.IntegerField()
     quoteCount = models.IntegerField()
-    media = models.JSONField()
+    media = models.JSONField(null=True)
     search = models.ForeignKey(Search, on_delete=models.CASCADE)
