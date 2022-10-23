@@ -26,13 +26,20 @@ def read_headers(file_path):
 def export_excel(request, report_id):
     report_obj = Report.objects.filter(pk=report_id).first()
     tweets = Tweet.objects.filter(search=report_obj.search)
+    buffer = create_report("tweet_info.json", tweets)
+    return FileResponse(buffer, as_attachment=True, filename='report.xlsx')
 
+
+def create_report(header_file, data):
     buffer = io.BytesIO()
     workbook = xlsxwriter.Workbook(buffer)
     worksheet = workbook.add_worksheet()
-    headers = read_headers("tweet_info.json")
+    headers = read_headers(header_file)
     len_headers = len(headers)
-    for row, t in enumerate(tweets):
+    for col, h in enumerate(headers):
+        worksheet.write(0, col, h)
+
+    for row, t in enumerate(data, start=1):
         for col, h in enumerate(headers):
             worksheet.write(row, col, str(getattr(t, h)))
         if t.last_comments is not None:
@@ -40,4 +47,4 @@ def export_excel(request, report_id):
     workbook.close()
     buffer.seek(0)
 
-    return FileResponse(buffer, as_attachment=True, filename='report.xlsx')
+    return buffer
