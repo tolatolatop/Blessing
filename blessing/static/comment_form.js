@@ -5,6 +5,8 @@ function data_choice(cb, did) {
         x.value = x.value.replace(/^,/, '')
     }
     else {
+        reg = RegExp('^' + did + '$')
+        x.value = x.value.replace(reg, '')
         reg = RegExp('^' + did + ',')
         x.value = x.value.replace(reg, '')
         reg = RegExp(',' + did + '$')
