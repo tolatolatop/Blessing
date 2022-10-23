@@ -3,7 +3,7 @@ from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 
 from .models import LabelModel, Report, Tweet
-from .form import CommentForm
+from .form import CommentForm, ReportCommentForm
 
 
 class LabelDetailView(DetailView):
@@ -35,5 +35,7 @@ class ReportDetailView(DetailView):
         tweets = Tweet.objects.filter(search=report_obj.search)
         context["search"] = report_obj.search
         context["tweets"] = tweets
-        context['comment_form'] = CommentForm
+        rcf = ReportCommentForm()
+        rcf.report = report_obj.pk
+        context['comment_form'] = rcf
         return context

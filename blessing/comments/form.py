@@ -4,6 +4,8 @@
 # @Author  : tolatolatop
 # @File    : form.py
 from django import forms
+from django.urls import reverse_lazy
+
 from .models import Comment, Link, Tweet
 
 
@@ -36,3 +38,10 @@ class CommentForm(forms.Form):
         for tweet in tweets:
             tweet.save()
         return True
+
+
+class ReportCommentForm(CommentForm):
+    report = forms.IntegerField(widget=forms.HiddenInput(), initial="")
+
+    def get_success_url(self):
+        return reverse_lazy('report-detail', kwargs={'pk': self.report})
