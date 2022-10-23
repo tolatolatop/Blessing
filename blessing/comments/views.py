@@ -33,6 +33,7 @@ class ReportDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         report_obj: Report = context['object']
         tweets = Tweet.objects.filter(search=report_obj.search)
+        context["search"] = report_obj.search
         context["tweets"] = tweets
         context['comment_form'] = CommentForm
         return context
