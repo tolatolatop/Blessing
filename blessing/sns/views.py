@@ -1,8 +1,11 @@
+import json
+
 from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import DetailView, CreateView
 
+from .common import call_snscrape
 from .models import Search
 
 
@@ -20,4 +23,7 @@ class SearchDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        obj = context["search"]
+        result = call_snscrape(obj)
+        context["result"] = json.dumps(result, ensure_ascii=False, indent=2).encode('utf-8')
         return context
