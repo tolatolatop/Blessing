@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import LabelModel, Tweet, Comment
+from .models import LabelModel, Tweet, Comment, Report
 
 
 @admin.register(LabelModel)
@@ -14,4 +14,9 @@ class TweetAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
     pass

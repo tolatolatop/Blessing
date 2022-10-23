@@ -5,4 +5,5 @@ from .views import LabelDetailView, CommentFormView
 urlpatterns = [
     path('label/<int:pk>', LabelDetailView.as_view(), name='labelmodel-detail'),
     path('comment', CommentFormView.as_view(), name='comment-form'),
+    path('report/<int:pk>', CommentFormView.as_view(), name='report-detail'),
 ]

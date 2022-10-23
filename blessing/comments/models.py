@@ -34,3 +34,7 @@ class Tweet(models.Model):
 class Link(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+
+
+class Report(models.Model):
+    search = models.ForeignKey(Search, on_delete=models.CASCADE)

@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+
+{% block scripts %}
+  <script src="{% static 'comment_form.js' %}"></script>
+{% endblock %}
+
+{% block sidebar %}
+  <h1>{{ search.name }}</h1>
+  <p>{{ search.query }}</p>
+  <p>modified: {{ search.modified }}</p>
+  <form method="post">{% csrf_token %}
+      <input type="submit" value="刷新">
+  </form>
+
+  <h1>Filter</h1>
+  <form method="post">{% csrf_token %}
+      <input type="submit" value="过滤">
+  </form>
+
+  <h1>Comments</h1>
+  <form method="post">{% csrf_token %}
+      {{ comment_form.as_p }}
+      <input type="submit" value="提交评论">
+  </form>
+
+  <form method="post" target="dummyframe">{% csrf_token %}
+      <input type="submit" value="通知">
+  </form>
+
+  <form method="post" target="dummyframe">{% csrf_token %}
+      <input type="submit" value="导出">
+  </form>
+
+  <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+{% endblock %}
+
+{% block content %}
+  <h1>Result</h1>
+  {% if tweets %}
+  <ul>
+  {% for tweet in tweets %}
+    <li>
+      <input name="tweet_id" type="checkbox" value="{{ tweet.id }}" onclick="data_choice({{tweet.id}})" />
+      <a href="{{ tweet.url }}">{{ tweet.url }}</a> ({{tweet.username}} - {{tweet.last_comments.type}})
+    </li>
+  {% endfor %}
+  </ul>
+  {% else %}
+  <p>There are no tweet in the database.</p>
+  {% endif %}
+{% endblock %}

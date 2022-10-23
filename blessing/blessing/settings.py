@@ -16,6 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TMPL_DIR = BASE_DIR / "templates"
 DATA_DIR = BASE_DIR / "data"
+STATIC_DIR = BASE_DIR / "static"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -53,6 +54,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blessing.urls'
+
+STATICFILES_DIRS = [
+    STATIC_DIR
+]
 
 TEMPLATES = [
     {
