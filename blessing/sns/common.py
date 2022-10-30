@@ -12,7 +12,7 @@ from comments.models import Tweet
 
 
 def call_snscrape(model: Search):
-    cmd = 'snscrape --max-results 20 --jsonl %s' % model.query
+    cmd = 'snscrape --max-results 120 --jsonl %s' % model.query
     cmd = shlex.split(cmd)
     p = sp.Popen(cmd, shell=False, stdout=sp.PIPE, stderr=sp.PIPE)
     out, err = p.communicate()
