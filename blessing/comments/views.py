@@ -47,3 +47,16 @@ class ReportDetailView(DetailView):
         rcf.fields["report"].initial = report_obj.pk
         context['comment_form'] = rcf
         return context
+
+
+class TestPageView(FormView):
+    template_name = 'comments/test_page.html'
+    form_class = ReportCommentForm
+    success_url = 'nothing'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.create_comment()
+        super().form_valid(form)
+        return HttpResponseRedirect(form.get_success_url())
