@@ -36,8 +36,8 @@ def export_excel(request, branch_id):
 
 def load_excel_local(branch, file_path: pathlib.Path):
     df = pd.read_excel(file_path, index_col=0)
-    for i in df.index:
-        data = df.loc[i].to_dict()
+    data_list = [{k: v for k, v in m.items() if pd.notnull(v)} for m in df.to_dict(orient='rows')]
+    for data in data_list:
         data['branch'] = branch
         LogData.objects.update_or_create(defaults=data, url=data["url"])
     return True
