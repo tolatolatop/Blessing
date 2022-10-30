@@ -27,9 +27,9 @@ def read_headers(file_path):
 
 
 def export_excel(request, branch_id):
-    report_obj = Branch.objects.filter(pk=branch_id).first()
+    branch = Branch.objects.filter(pk=branch_id).first()
     saved_filter = request.session.get("saved_filter", {})
-    log_data_collect = LogData.objects.filter(branch=report_obj.upstream, **saved_filter)
+    log_data_collect = LogData.objects.filter(branch=branch, **saved_filter)
     buffer = create_report("log_data_info.json", log_data_collect)
     return FileResponse(buffer, as_attachment=True, filename='report.xlsx')
 
