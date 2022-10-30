@@ -24,7 +24,7 @@ function get_filter_data() {
 function save_filter() {
     var filter_data = get_filter_data();
     $.ajax({
-        url: '/comments/save_filter',
+        url: '/branch/save_filter',
         type: 'POST',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(filter_data),
@@ -43,7 +43,7 @@ function post_comment() {
     comment_data['links'] = String(comment_link);
     var csrf_token = comment_data["csrfmiddlewaretoken"];
     $.ajax({
-        url: '/comments/comment',
+        url: '/branch/comment',
         type: 'POST',
         headers: {'X-CSRFToken': csrf_token},
         contentType: "application/x-www-form-urlencoded",
