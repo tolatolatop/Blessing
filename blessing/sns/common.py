@@ -44,6 +44,6 @@ def save_tweet(search_obj, tweet_list):
         }
         del t['t_id']
         del t['url']
-        obj = Tweet.objects.update_or_create(defaults=update_id, **t)
+        obj = Tweet.objects.update_or_create(defaults=t, **update_id)
         res.append(obj)
     return res
