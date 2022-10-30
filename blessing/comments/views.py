@@ -26,7 +26,7 @@ class TimelineView(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        branch_id = self.request.GET.get("branch_id")
+        branch_id = self.kwargs["branch_id"]
         branch = Branch.objects.get(pk=branch_id)
         saved_filter = self.request.session.get("saved_filter", {})
         return LogData.objects.filter(branch=branch, **saved_filter)
