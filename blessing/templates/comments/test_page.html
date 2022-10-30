@@ -21,21 +21,28 @@
 </div>
 
 <script>
-    var url = 'https://examples.wenzhixin.net.cn/examples/bootstrap_table/data';
-    var columns = [
-        {
-            field: 'state',
-            checkbox: 'true',
-        }, {
-            field: 'id',
-            title: 'ID',
-        }, {
-            field: 'name',
-            title: '姓名'
-        }, {
-            field: 'price',
-            title: '价格'
-        },
+    var url = 'http://10.0.0.11:58030/comments/timeline?format=json';
+    columns = [
+      {
+          field: 'id',
+          title: 'ID',
+      },
+      {
+          field: 'username',
+          title: '用户名',
+      },
+            {
+          field: 'date',
+          title: '日期',
+      },
+      {
+          field: 'content',
+          title: '内容',
+      },
+      {
+          field: 'likeCount',
+          title: '点赞数',
+      },
     ];
     $("#table").bootstrapTable({
         toolbar: '#toolbar',                //自定义工具按钮
@@ -54,21 +61,6 @@
         height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
         showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
         columns: columns,                   //列参数
-        detailView: true,                   //是否显示父子表
-        //展开行事件
-        onExpandRow: function (index, row, $detail) {
-            zi_table(index, row, $detail); //回调函数
-        },
     });
-
-    //定义子表函数
-    function zi_table(index, row, $detail) {
-        var fzr_table = $detail.html('<table></table>').find('table');
-        $(fzr_table).bootstrapTable({
-            url: url,
-            columns: columns,
-        })
-    }
-
 </script>
 {% endblock %}

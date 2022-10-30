@@ -62,26 +62,9 @@ class ReportDetailView(DetailView):
         return context
 
 
-class TestPageView(FormView):
+class TestPageView(DetailView):
     template_name = 'comments/test_page.html'
-    form_class = ReportCommentForm
-    success_url = 'nothing'
 
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        form.create_comment()
-        super().form_valid(form)
-        return HttpResponseRedirect(form.get_success_url())
+    def get_context_data(self, **kwargs):
 
-
-def get_timeline(request):
-    page_number = request.GET.get("page", 1)
-    page_size = int(request.GET.get("page_size", 40))
-    tweet_filters = request.session.get("filters", {})
-
-    tweets = Tweet.objects.filter(**tweet_filters)
-    paginator = Paginator(tweets, page_size)
-    tweets = paginator.get_page(page_number)
-
-    return JsonResponse({"data": tweets})
+        return

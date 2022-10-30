@@ -4,7 +4,7 @@
 # @Author  : tolatolatop
 # @File    : restful.py
 from rest_framework import serializers
-from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 
 from .models import Tweet
 
@@ -15,7 +15,5 @@ class TweetSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'username', 'date', 'content', 'likeCount']
 
 
-class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 100
-    page_size_query_param = 'page_size'
-    max_page_size = 1000
+class StandardResultsSetPagination(LimitOffsetPagination):
+    pass
