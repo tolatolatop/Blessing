@@ -89,7 +89,7 @@ def timeline(request):
 
 @csrf_exempt
 def save_filter(request):
-    if request.is_ajax():
-        if request.method == 'POST':
-            request.session["saved_filter"] = request.body
+    if request.method == 'POST':
+        request.session["saved_filter"] = request.body
+        return HttpResponse(request.body)
     return HttpResponse("OK")
