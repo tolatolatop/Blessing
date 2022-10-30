@@ -20,7 +20,7 @@ def read_headers(file_path):
     json_file = data_dir / file_path
     with json_file.open('r') as f:
         data = json.load(f)
-    data = dict((i['title'], i['field']) for i in data)
+    data = dict((i['field'], i['title']) for i in data)
     return data
 
 
