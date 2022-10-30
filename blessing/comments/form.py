@@ -11,7 +11,6 @@ from .models import Comment, Link, LogData
 
 
 class CommentForm(forms.Form):
-    name = forms.CharField(max_length=30)
     type = forms.CharField(max_length=10)
     description = forms.CharField(max_length=255)
     links = forms.CharField(max_length=2048)
