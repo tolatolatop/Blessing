@@ -9,6 +9,6 @@
     - ["通过", "通过"]
     - ["驳回", "驳回"]
     - ["重新打开", "重新打开"]
-- name: comment
+- name: description
   type: text
   label: 备注
