@@ -1,7 +1,7 @@
 import json
 
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect, JsonResponse, HttpRequest, HttpResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpRequest, HttpResponse, HttpResponseServerError
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -89,7 +89,8 @@ def timeline(request):
 
 @csrf_exempt
 def save_filter(request):
+    HttpResponse("Got json data")
     if request.method == 'POST':
-        request.session["saved_filter"] = request.body
+        request.session["saved_filter"] = json.loads(request.body)
         return HttpResponse(request.body)
-    return HttpResponse("OK")
+    return HttpResponseServerError("Malformed data!")
