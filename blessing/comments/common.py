@@ -6,11 +6,13 @@
 
 import io
 import json
+import pathlib
 from typing import List
 
 import xlsxwriter
 from django.http import FileResponse
 from django.conf import settings
+import pandas as pd
 
 from .models import LogData, Branch
 
@@ -30,6 +32,15 @@ def export_excel(request, branch_id):
     log_data_collect = LogData.objects.filter(branch=report_obj.upstream, **saved_filter)
     buffer = create_report("log_data_info.json", log_data_collect)
     return FileResponse(buffer, as_attachment=True, filename='report.xlsx')
+
+
+def load_excel_local(branch, file_path: pathlib.Path):
+    df = pd.read_excel(file_path, index_col=0)
+    for i in df.index:
+        data = df.loc[i].to_dict()
+        data['branch'] = branch
+        LogData.objects.update_or_create(defaults=data, url=data["url"])
+    return True
 
 
 def create_report(header_file, data):

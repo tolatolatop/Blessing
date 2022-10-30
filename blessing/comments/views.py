@@ -1,4 +1,5 @@
 import json
+import pathlib
 
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError
@@ -6,11 +7,13 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
+from django.http import Http404
 from rest_framework import viewsets
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from .common import load_excel_local
 from .form import CommentForm, FilterForm, TimelineCommentForm
 from .models import LogData, Branch
 from .restful import LogDataSerializer, StandardResultsSetPagination, BranchSerializer
@@ -32,6 +35,16 @@ class TimelineView(viewsets.ModelViewSet):
 class BranchView(viewsets.ModelViewSet):
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
+
+    def create(self, request, *args, **kwargs):
+        file: pathlib.Path = settings.DATA_DIR / request.POST.get("path")
+        if file.exists():
+            res = super(BranchView, self).create(request, *args, **kwargs)
+            obj = self.get_object()
+            load_excel_local(obj, file)
+            return res
+        else:
+            raise Http404
 
 
 class CommentFormView(FormView):
