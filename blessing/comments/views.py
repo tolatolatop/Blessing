@@ -91,6 +91,7 @@ def timeline(request):
 def save_filter(request):
     HttpResponse("Got json data")
     if request.method == 'POST':
-        request.session["saved_filter"] = json.loads(request.body)
+        data = request.body
+        request.session["saved_filter"] = json.loads(data)
         return HttpResponse(request.body)
     return HttpResponseServerError("Malformed data!")

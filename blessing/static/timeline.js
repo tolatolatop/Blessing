@@ -17,8 +17,8 @@ function save_filter() {
     $.ajax({
         url: '/comments/save_filter',
         type: 'POST',
-        contentType: 'application/json; charset=utf-8',
-        data: filter_data,
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(filter_data),
         dataType: 'json',
         success: function(result) {
             alert(result.Result);
