@@ -1,0 +1,14 @@
+- name: name
+  type: text
+  label: 用户名
+- name: type
+  label: 备注状态
+  type: choice
+  data:
+    - ["申请", "申请"]
+    - ["通过", "通过"]
+    - ["驳回", "驳回"]
+    - ["重新打开", "重新打开"]
+- name: comment
+  type: text
+  label: 备注

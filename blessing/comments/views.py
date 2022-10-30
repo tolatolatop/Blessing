@@ -11,7 +11,7 @@ from django.views.generic.detail import DetailView
 from django.conf import settings
 
 from .models import LabelModel, Report, Tweet
-from .form import CommentForm, ReportCommentForm, FilterForm
+from .form import CommentForm, ReportCommentForm, FilterForm, TimelineCommentForm
 from rest_framework import viewsets
 from .restful import TweetSerializer, StandardResultsSetPagination
 
@@ -38,15 +38,15 @@ class LabelDetailView(DetailView):
 
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'
-    form_class = ReportCommentForm
-    success_url = 'nothing'
+    form_class = CommentForm
+    success_url = '/comments/report/test'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.create_comment()
         super().form_valid(form)
-        return HttpResponseRedirect(form.get_success_url())
+        return HttpResponseRedirect(self.success_url)
 
 
 class ReportDetailView(DetailView):
@@ -80,8 +80,8 @@ def timeline(request):
     context = {
         'headers': headers,
         'data_url': reverse('timeline'),
-        'filter_form': FilterForm(filter_data, saved_filter),
-        'comment_form': ReportCommentForm()
+        'filter_form': FilterForm(saved_filter),
+        'comment_form': TimelineCommentForm()
     }
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'comments/test_page.html', context=context)

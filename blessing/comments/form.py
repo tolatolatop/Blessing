@@ -6,6 +6,7 @@
 from ruamel.yaml import YAML
 from django import forms
 from django.urls import reverse_lazy, reverse
+from django.conf import settings
 
 from .models import Comment, Link, Tweet
 
@@ -48,7 +49,7 @@ class ReportCommentForm(CommentForm):
         return reverse('report-detail', kwargs={'pk': self.cleaned_data['report']})
 
 
-class FilterForm(forms.Form):
+class YamlForm(forms.Form):
 
     def __init__(self, file, init_value: dict, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -68,3 +69,17 @@ class FilterForm(forms.Form):
             else:
                 field_obj = None
             self.fields[field_name] = field_obj
+
+
+class FilterForm(YamlForm):
+    yaml_path = settings.STATIC_DIR / "tweet_filter.yaml"
+
+    def __init__(self, init_value: dict, *args, **kwargs):
+        super(FilterForm, self).__init__(self.yaml_path, init_value, *args, **kwargs)
+
+
+class TimelineCommentForm(YamlForm):
+    yaml_path = settings.STATIC_DIR / "comment.yaml"
+
+    def __init__(self, *args, **kwargs):
+        super(TimelineCommentForm, self).__init__(self.yaml_path, {}, *args, **kwargs)
