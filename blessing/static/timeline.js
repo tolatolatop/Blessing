@@ -41,11 +41,13 @@ function post_comment() {
     var comment_data =  get_comment_data($comment_form);
     var comment_link = get_comment_link();
     comment_data['link'] = comment_link;
+    var csrf_token = comment_data["csrfmiddlewaretoken"];
     $.ajax({
         url: '/comments/comment',
         type: 'POST',
+        headers: {'X-CSRFToken': csrf_token},
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(filter_data),
+        data: JSON.stringify(comment_data),
         dataType: 'json',
         success: function(result) {
             $('#submitModel').modal('hide');
