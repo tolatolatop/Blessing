@@ -13,11 +13,15 @@ from .models import Tweet
 
 
 class TweetSerializer(serializers.HyperlinkedModelSerializer):
-    comment_type = serializers.CharField(source='last_comments.type')
-
     class Meta:
         model = Tweet
         fields = ['id', 'comment_type', 'url', 'username', 'date', 'content']
+
+    @property
+    def comment_type(self):
+        if self.last_comments is not None:
+            return self.last_comments.type
+        return ""
 
 
 class StandardResultsSetPagination(LimitOffsetPagination):
