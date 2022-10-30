@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.utils import timezone
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
@@ -60,3 +60,15 @@ class TestPageView(FormView):
         form.create_comment()
         super().form_valid(form)
         return HttpResponseRedirect(form.get_success_url())
+
+
+def get_timeline(request):
+    page_number = request.GET.get("page", 1)
+    page_size = int(request.GET.get("page_size", 40))
+    tweet_filters = request.session.get("filters", {})
+
+    tweets = Tweet.objects.filter(**tweet_filters)
+    paginator = Paginator(tweets, page_size)
+    tweets = paginator.get_page(page_number)
+
+    return JsonResponse({"data": tweets})
