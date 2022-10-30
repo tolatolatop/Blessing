@@ -1,6 +1,6 @@
 - name: name
   type: text
-  label: 用户名
+  label: 备注标记
 - name: type
   label: 备注状态
   type: choice
