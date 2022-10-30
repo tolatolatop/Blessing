@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+{% load bootstrap5 %}
+
+{% block body %}
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      {% block sidebar %}
+      <p>
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+          Toggle width collapse
+        </button>
+      </p>
+      <div style="min-height: 120px;">
+        <div class="collapse collapse-horizontal" id="collapseWidthExample">
+          <div class="card card-body" style="width: 300px;">
+            <form method="post" class="form">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                  Submit
+                </button>
+              {% endbuttons %}
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+      </div>
+    <div class="col col-lg-2">
+      {% block content %}
+        Variable width content
+      {% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}

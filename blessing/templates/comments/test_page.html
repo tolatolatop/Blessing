@@ -1,27 +1,16 @@
-{% extends "base_generic.html" %}
+{% extends "comments/base_comments.html" %}
 {% load bootstrap5 %}
 
-{% block body %}
-
-<p>
-  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseForm">
-    Link with href
-  </a>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
-    Button with data-bs-target
-  </button>
-</p>
-<div class="collapse" id="collapseForm">
-  <div class="card card-body">
-    <form method="post" class="form">
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      {% buttons %}
-        <button type="submit" class="btn btn-primary">
-          Submit
-        </button>
-      {% endbuttons %}
-    </form>
-  </div>
+{% block content %}
+<div class="card card-body">
+  <form method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">
+        Submit
+      </button>
+    {% endbuttons %}
+  </form>
 </div>
 {% endblock %}
