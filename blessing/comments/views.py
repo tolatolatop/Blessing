@@ -40,13 +40,13 @@ class BranchView(viewsets.ModelViewSet):
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'
     form_class = CommentForm
+    success_url = reverse("comment-form")
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.create_comment()
         super().form_valid(form)
-        success_url = reverse("comment-form")
         return HttpResponseRedirect(success_url)
 
 
