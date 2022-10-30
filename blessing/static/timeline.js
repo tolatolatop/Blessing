@@ -40,15 +40,14 @@ function post_comment() {
     var $comment_form = $('#submitModel-table');
     var comment_data =  get_comment_data($comment_form);
     var comment_link = get_comment_link();
-    comment_data['link'] = comment_link;
+    comment_data['links'] = comment_link;
     var csrf_token = comment_data["csrfmiddlewaretoken"];
     $.ajax({
         url: '/comments/comment',
         type: 'POST',
         headers: {'X-CSRFToken': csrf_token},
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(comment_data),
-        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded",
+        data: comment_data,
         success: function(result) {
             $('#submitModel').modal('hide');
             $('#table').bootstrapTable('refresh');
