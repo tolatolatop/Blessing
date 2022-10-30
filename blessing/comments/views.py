@@ -28,7 +28,7 @@ class TimelineView(viewsets.ModelViewSet):
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'
     form_class = CommentForm
-    success_url = '/comments/report/test'
+    success_url = 'timeline'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
