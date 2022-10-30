@@ -4,7 +4,7 @@ import pathlib
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
 from django.http import Http404
@@ -40,7 +40,7 @@ class BranchView(viewsets.ModelViewSet):
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'
     form_class = CommentForm
-    success_url = reverse("comment-form")
+    success_url = reverse_lazy("comment-form")
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
