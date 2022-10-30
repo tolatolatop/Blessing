@@ -9,7 +9,7 @@ from rest_framework import serializers
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
-from .models import LogData
+from .models import LogData, Branch
 
 
 class LogDataSerializer(serializers.HyperlinkedModelSerializer):
@@ -27,3 +27,9 @@ class StandardResultsSetPagination(LimitOffsetPagination):
             ('previous', self.get_previous_link()),
             ('rows', data)
         ]))
+
+
+class BranchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Branch
+        fields = ['name', 'path']

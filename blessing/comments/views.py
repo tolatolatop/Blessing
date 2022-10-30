@@ -8,9 +8,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
 from rest_framework import viewsets
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from .form import CommentForm, FilterForm, TimelineCommentForm
-from .models import LogData
-from .restful import LogDataSerializer, StandardResultsSetPagination
+from .models import LogData, Branch
+from .restful import LogDataSerializer, StandardResultsSetPagination, BranchSerializer
 
 
 class TimelineView(viewsets.ModelViewSet):
@@ -24,6 +27,11 @@ class TimelineView(viewsets.ModelViewSet):
         branch_id = self.request.GET.get("branch_id")
         saved_filter = self.request.session.get("saved_filter", {})
         return LogData.objects.filter(branch=branch_id, **saved_filter)
+
+
+class BranchView(viewsets.ModelViewSet):
+    queryset = Branch.objects.all()
+    serializer_class = BranchSerializer
 
 
 class CommentFormView(FormView):
