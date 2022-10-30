@@ -21,7 +21,7 @@ function getFormData($form){
 }
 
 function get_filter_data() {
-    var ele = $("filterModel-table");
+    var ele = $("#filterModel-table");
     var data = getFormData(ele)
     var filter_data = {}
     for (var key in data) {
@@ -41,8 +41,8 @@ function save_filter() {
         data: JSON.stringify(filter_data),
         dataType: 'json',
         success: function(result) {
-            alert(result.Result);
-            $('#filterModel').modal('dispose');
+            $('#filterModel').modal('hide');
+            $('#table').bootstrapTable('refresh');
         }
     });
 }
