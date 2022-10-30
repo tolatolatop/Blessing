@@ -3,7 +3,9 @@ setuptools~=57.0.0
 snscrape
 XlsxWriter~=3.0.3
 django-bootstrap-v5
-djangorestframework
+djangorestframework~=3.14.0
 markdown
 django-filter
 ruamel.yaml
+pandas~=1.5.1
+openpyxl~=3.0.10

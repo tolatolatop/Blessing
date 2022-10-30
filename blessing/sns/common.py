@@ -6,6 +6,10 @@
 import json
 import shlex
 import subprocess as sp
+from datetime import datetime
+
+import pandas as pd
+from django.conf import settings
 
 from .models import Search
 from comments.models import LogData
@@ -30,6 +34,17 @@ def clean_log_data(t):
               'mentionedUsers', 'coordinates', 'place', 'hashtags', 'cashtags']:
         del t[i]
     return t
+
+
+def save_log_data_as_excel(log_data_collect):
+
+    log_data_collect = [clean_log_data(d) for d in log_data_collect]
+    df = pd.DataFrame(log_data_collect)
+
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%f")
+    file_path = settings.DATA_DIR / f"{timestamp}.xlsx"
+    df.to_excel(file_path)
+    return True
 
 
 def save_log_data(search_obj, log_data_collect):
