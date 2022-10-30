@@ -45,3 +45,15 @@ class ReportCommentForm(CommentForm):
 
     def get_success_url(self):
         return reverse('report-detail', kwargs={'pk': self.cleaned_data['report']})
+
+
+class FilterForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for i in range(10):
+            field_name = "field_name_%d" % i
+            self.fields[field_name] = forms.CharField(required=False)
+
+    def save(self, commit: bool = True):
+        return

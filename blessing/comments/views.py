@@ -7,7 +7,7 @@ from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 
 from .models import LabelModel, Report, Tweet
-from .form import CommentForm, ReportCommentForm
+from .form import CommentForm, ReportCommentForm, FilterForm
 from rest_framework import viewsets
 from .restful import TweetSerializer, StandardResultsSetPagination
 
@@ -89,7 +89,9 @@ def timeline(request):
     ]
     context = {
         'headers': headers,
-        'data_url': reverse('timeline')
+        'data_url': reverse('timeline'),
+        'filter_form': FilterForm(),
+        'comment_form': ReportCommentForm()
     }
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'comments/test_page.html', context=context)
