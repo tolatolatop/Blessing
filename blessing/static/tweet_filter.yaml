@@ -2,11 +2,11 @@
   type: choice
   label: 用户名
   data:
-    - YDPFALION
-    - da_yuri326
-    - kagurameazz
-    - Icarus_mea
-    - Ytaieyu
+    - [YDPFALION, YDPFALION]
+    - [da_yuri326, da_yuri326]
+    - [kagurameazz, kagurameazz]
+    - [Icarus_mea, Icarus_mea]
+    - [Ytaieyu, Ytaieyu]
 - name: content
   label: 内容
   type: text
