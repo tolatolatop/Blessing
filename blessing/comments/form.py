@@ -53,7 +53,7 @@ class FilterForm(forms.Form):
     def __init__(self, file, *args, **kwargs):
         super().__init__(*args, **kwargs)
         yaml = YAML()
-        with open(file, 'w') as f:
+        with open(file, 'r') as f:
             field_list = yaml.load(f)
         for field in field_list:
             field_name = field["name"]
