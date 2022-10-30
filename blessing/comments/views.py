@@ -1,18 +1,15 @@
 import json
 
-from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect, JsonResponse, HttpRequest, HttpResponse, HttpResponseServerError
+from django.conf import settings
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseServerError
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
-from django.views.generic.detail import DetailView
-from django.conf import settings
-
-from .models import LabelModel, Report, Tweet
-from .form import CommentForm, ReportCommentForm, FilterForm, TimelineCommentForm
 from rest_framework import viewsets
+
+from .form import CommentForm, FilterForm, TimelineCommentForm
+from .models import Tweet
 from .restful import TweetSerializer, StandardResultsSetPagination
 
 
@@ -28,14 +25,6 @@ class TimelineView(viewsets.ModelViewSet):
         return Tweet.objects.filter(**saved_filter)
 
 
-class LabelDetailView(DetailView):
-    model = LabelModel
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'
     form_class = CommentForm
@@ -47,26 +36,6 @@ class CommentFormView(FormView):
         form.create_comment()
         super().form_valid(form)
         return HttpResponseRedirect(self.success_url)
-
-
-class ReportDetailView(DetailView):
-    model = Report
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        report_obj: Report = context['object']
-        tweets = Tweet.objects.filter(search=report_obj.search)
-
-        paginator = Paginator(tweets, 40)
-        page_number = self.request.GET.get('page')
-        tweets = paginator.get_page(page_number)
-
-        context["search"] = report_obj.search
-        context["tweets"] = tweets
-        rcf = ReportCommentForm()
-        rcf.fields["report"].initial = report_obj.pk
-        context['comment_form'] = rcf
-        return context
 
 
 def timeline(request):
@@ -84,7 +53,7 @@ def timeline(request):
         'comment_form': TimelineCommentForm()
     }
     # Render the HTML template index.html with the data in the context variable
-    return render(request, 'comments/test_page.html', context=context)
+    return render(request, 'comments/index.html', context=context)
 
 
 @csrf_exempt

@@ -42,13 +42,6 @@ class CommentForm(forms.Form):
         return True
 
 
-class ReportCommentForm(CommentForm):
-    report = forms.IntegerField(widget=forms.HiddenInput(), initial="")
-
-    def get_success_url(self):
-        return reverse('report-detail', kwargs={'pk': self.cleaned_data['report']})
-
-
 class YamlForm(forms.Form):
 
     def __init__(self, file, init_value: dict, *args, **kwargs):
