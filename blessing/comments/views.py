@@ -13,7 +13,6 @@ from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .common import load_excel_local
 from .form import CommentForm, FilterForm, TimelineCommentForm
 from .models import LogData, Branch
 from .restful import LogDataSerializer, StandardResultsSetPagination, BranchSerializer
