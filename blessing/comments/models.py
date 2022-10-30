@@ -2,7 +2,7 @@ import pathlib
 
 from django.db import models
 import pandas as pd
-from django_filters.conf import settings
+from django.conf import settings
 
 
 def load_excel_local(branch, file_path: pathlib.Path):
