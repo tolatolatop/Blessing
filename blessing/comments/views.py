@@ -27,8 +27,9 @@ class TimelineView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         branch_id = self.request.GET.get("branch_id")
+        branch = Branch.objects.get(pk=branch_id)
         saved_filter = self.request.session.get("saved_filter", {})
-        return LogData.objects.filter(branch=branch_id, **saved_filter)
+        return LogData.objects.filter(branch=branch, **saved_filter)
 
 
 class BranchView(viewsets.ModelViewSet):
