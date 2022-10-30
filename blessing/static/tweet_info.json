@@ -18,5 +18,9 @@
   {
     "field": "likeCount",
     "title": "点赞数"
+  },
+  {
+    "field": "comment_type",
+    "title": "状态"
   }
 ]
