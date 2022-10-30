@@ -59,12 +59,14 @@ def timeline(request, branch_id):
     data_url = reverse('timeline', kwargs={"branch_id": branch_id})
     filter_form = FilterForm(saved_filter)
     timeline_comment_form = TimelineCommentForm()
+    export_url = reverse('branch-export', kwargs={"branch_id": branch_id})
 
     context = {
         'headers': headers,
         'data_url': data_url,
         'filter_form': filter_form,
-        'comment_form': timeline_comment_form
+        'comment_form': timeline_comment_form,
+        'export_url': export_url
     }
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'comments/index.html', context=context)
