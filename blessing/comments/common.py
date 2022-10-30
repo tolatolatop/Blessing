@@ -20,12 +20,14 @@ def read_headers(file_path):
     json_file = data_dir / file_path
     with json_file.open('r') as f:
         data = json.load(f)
+    data = dict((i['title'], i['field']) for i in data)
     return data
 
 
 def export_excel(request, report_id):
     report_obj = Report.objects.filter(pk=report_id).first()
-    tweets = Tweet.objects.filter(search=report_obj.search)
+    saved_filter = request.session.get("saved_filter", {})
+    tweets = Tweet.objects.filter(search=report_obj.search, **saved_filter)
     buffer = create_report("tweet_info.json", tweets)
     return FileResponse(buffer, as_attachment=True, filename='report.xlsx')
 
