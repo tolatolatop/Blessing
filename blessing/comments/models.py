@@ -20,8 +20,8 @@ class Branch(models.Model):
 
     def save(self, *args, **kwargs):
         file: pathlib.Path = settings.DATA_DIR / self.path
-        load_excel_local(self, file)
         res = super(Branch, self).save(*args, **kwargs)
+        load_excel_local(self, file)
         return res
 
 
