@@ -30,6 +30,12 @@ class Tweet(models.Model):
     search = models.ForeignKey(Search, on_delete=models.CASCADE)
     last_comments = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True)
 
+    @property
+    def comment_type(self):
+        if self.last_comments is not None:
+            return self.last_comments.type
+        return ""
+
 
 class Link(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
