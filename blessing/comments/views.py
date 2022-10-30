@@ -65,7 +65,28 @@ class ReportDetailView(DetailView):
 
 def timeline(request):
     context = {
-
+        'headers': [
+            {
+                "field": "id",
+                "title": "ID"
+            },
+            {
+                "field": "username",
+                "title": "用户名"
+            },
+            {
+                "field": "date",
+                "title": "日期"
+            },
+            {
+                "field": "content",
+                "title": "内容"
+            },
+            {
+                "field": "likeCount",
+                "title": "点赞数"
+            }
+        ]
     }
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'comments/test_page.html', context=context)

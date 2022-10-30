@@ -17,33 +17,20 @@
 
   </div>
 
-  <table id="table" data-click-to-select="true"></table>
+  <table id="table" data-click-to-select="true">
+    <thead>
+      <tr>
+        <th data-field="state" data-checkbox="true"></th>
+        {% for header in headers %}
+          <th data-field="header.field">header.title</th>
+        {% endfor %}
+      </tr>
+    </thead>
+  </table>
 </div>
 
 <script>
     var url = 'http://10.0.0.11:58030/comments/timeline?format=json';
-    columns = [
-      {
-          field: 'id',
-          title: 'ID',
-      },
-      {
-          field: 'username',
-          title: '用户名',
-      },
-            {
-          field: 'date',
-          title: '日期',
-      },
-      {
-          field: 'content',
-          title: '内容',
-      },
-      {
-          field: 'likeCount',
-          title: '点赞数',
-      },
-    ];
     $("#table").bootstrapTable({
         toolbar: '#toolbar',                //自定义工具按钮
         url: url,                           //请求后台的URL（*）
@@ -60,7 +47,6 @@
         minimumCountColumns: 2,             //最少允许的列数
         height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
         showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
-        columns: columns,                   //列参数
     });
 </script>
 {% endblock %}
