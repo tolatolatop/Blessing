@@ -3,3 +3,6 @@ setuptools~=57.0.0
 snscrape
 XlsxWriter~=3.0.3
 django-bootstrap-v5
+djangorestframework
+markdown
+django-filter
