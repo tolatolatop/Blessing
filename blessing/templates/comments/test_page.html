@@ -1,23 +1,16 @@
-{# Load the tag library #}
-{% load bootstrap5 %}
-
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+{% extends "base_generic.html" %}
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-{# Display a form #}
+{% block body %}
 <form method="post" class="form">
   {% csrf_token %}
   {% bootstrap_form form %}
-  {{ form.as_p }}
   {% buttons %}
     <button type="submit" class="btn btn-primary">
       Submit
     </button>
   {% endbuttons %}
 </form>
-
-{# Read the documentation for more information #}
+{% endblock %}
