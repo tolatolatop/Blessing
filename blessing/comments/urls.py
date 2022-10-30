@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import LabelDetailView, CommentFormView, ReportDetailView, TestPageView, get_timeline, TimelineView
+from .views import LabelDetailView, CommentFormView, ReportDetailView, TestPageView, TimelineView
 from .common import export_excel
 
 urlpatterns = [

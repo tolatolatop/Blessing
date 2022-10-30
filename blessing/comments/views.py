@@ -66,5 +66,5 @@ class TestPageView(DetailView):
     template_name = 'comments/test_page.html'
 
     def get_context_data(self, **kwargs):
-
-        return
+        context = super().get_context_data(**kwargs)
+        return context
