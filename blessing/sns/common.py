@@ -38,7 +38,6 @@ def save_tweet(search_obj, tweet_list):
         # bad code
         t = clean_tweet_data(t)
         t['search'] = search_obj
-        obj = Tweet(**t)
-        obj.save()
+        obj = Tweet.objects.update_or_create(**t)
         res.append(obj)
     return res
