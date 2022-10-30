@@ -47,3 +47,33 @@ function save_filter() {
     });
 }
 
+function post_comment() {
+    var $comment_form = $('#submitModel-table');
+    var comment_data =  get_comment_data($comment_form);
+    var comment_link = get_comment_link();
+    comment_data['link'] = comment_link;
+    $.ajax({
+        url: '/comments/comment',
+        type: 'POST',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(filter_data),
+        dataType: 'json',
+        success: function(result) {
+            $('#submitModel').modal('hide');
+            $('#table').bootstrapTable('refresh');
+        }
+    });
+}
+
+function get_comment_link() {
+    var $table = $('#table');
+    var data_list = $table.bootstrapTable('getSelections');
+    var id_list = [];
+    data_list.forEach((e)=>{id_list.push(e['id'])});
+    return id_list
+}
+
+function get_comment_data($form) {
+    var comment_data = getFormData($form)
+    return comment_data
+}
