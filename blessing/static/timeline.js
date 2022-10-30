@@ -9,11 +9,31 @@ $('#submitModel').on('show.bs.modal', function (event) {
 })
 
 
+function getFormData($form){
+    var un_indexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(un_indexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}
+
+function get_filter_data() {
+    var ele = $("filterModel-table");
+    var data = getFormData(ele)
+    var filter_data = {}
+    for (var key in data) {
+        if (key != 'csrfmiddlewaretoken' && data[key] != "") {
+            filter_data[key + '__contains'] = data[key]
+        }
+    }
+    return filter_data
+}
+
 function save_filter() {
-    var filter_data = {
-        username: 'YDPFALION',
-        content__contains: '動画'
-    };
+    var filter_data = get_filter_data();
     $.ajax({
         url: '/comments/save_filter',
         type: 'POST',

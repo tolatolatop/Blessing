@@ -20,7 +20,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post">{% csrf_token %}
+        <form id="filterModel-table" method="post">{% csrf_token %}
           {{ filter_form.as_p }}
         </form>
       </div>
@@ -43,7 +43,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="post">{% csrf_token %}
+        <form id="submitModel-table" method="post">{% csrf_token %}
           {{ comment_form.as_p }}
         </form>
       </div>
