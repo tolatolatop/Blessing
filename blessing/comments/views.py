@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
@@ -62,9 +63,9 @@ class ReportDetailView(DetailView):
         return context
 
 
-class TestPageView(DetailView):
-    template_name = 'comments/test_page.html'
+def timeline(request):
+    context = {
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+    }
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'comments/test_page.html', context=context)

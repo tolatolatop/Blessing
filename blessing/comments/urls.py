@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import LabelDetailView, CommentFormView, ReportDetailView, TestPageView, TimelineView
+from .views import LabelDetailView, CommentFormView, ReportDetailView, TimelineView, timeline
 from .common import export_excel
 
 urlpatterns = [
@@ -8,6 +8,6 @@ urlpatterns = [
     path('comment', CommentFormView.as_view(), name='comment-form'),
     path('report/<int:pk>', ReportDetailView.as_view(), name='report-detail'),
     path('report/<int:report_id>/excel', export_excel, name='report-excel'),
-    path('report/test', TestPageView.as_view(), name='test_page'),
+    path('report/test', timeline, name='test_page'),
     path('timeline', TimelineView.as_view({'get': 'list'}), name='timeline'),
 ]
