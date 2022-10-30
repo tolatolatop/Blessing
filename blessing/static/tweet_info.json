@@ -1,9 +1,22 @@
-{
-  "url": "url",
-  "date": "date",
-  "content": "content",
-  "username": "username",
-  "replyCount": "replyCount",
-  "retweetCount": "retweetCount",
-  "likeCount": "likeCount"
-}
+[
+  {
+    "field": "id",
+    "title": "ID"
+  },
+  {
+    "field": "username",
+    "title": "用户名"
+  },
+  {
+    "field": "date",
+    "title": "日期"
+  },
+  {
+    "field": "content",
+    "title": "内容"
+  },
+  {
+    "field": "likeCount",
+    "title": "点赞数"
+  }
+]

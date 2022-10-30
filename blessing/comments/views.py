@@ -1,3 +1,5 @@
+import json
+
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
@@ -5,6 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
+from django.conf import settings
 
 from .models import LabelModel, Report, Tweet
 from .form import CommentForm, ReportCommentForm, FilterForm
@@ -65,32 +68,15 @@ class ReportDetailView(DetailView):
 
 
 def timeline(request):
-    headers = [
-        {
-            "field": "id",
-            "title": "ID"
-        },
-        {
-            "field": "username",
-            "title": "用户名"
-        },
-        {
-            "field": "date",
-            "title": "日期"
-        },
-        {
-            "field": "content",
-            "title": "内容"
-        },
-        {
-            "field": "likeCount",
-            "title": "点赞数"
-        }
-    ]
+    tweet_info_file = settings.STATIC_DIR / "tweet_info.json"
+    with open(tweet_info_file, "r") as f:
+        headers = json.load(f)
+    filter_data = settings.STATIC_DIR / "tweet_filter.yaml"
+
     context = {
         'headers': headers,
         'data_url': reverse('timeline'),
-        'filter_form': FilterForm(),
+        'filter_form': FilterForm(filter_data),
         'comment_form': ReportCommentForm()
     }
     # Render the HTML template index.html with the data in the context variable
