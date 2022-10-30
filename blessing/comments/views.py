@@ -6,6 +6,18 @@ from django.views.generic.detail import DetailView
 
 from .models import LabelModel, Report, Tweet
 from .form import CommentForm, ReportCommentForm
+from rest_framework import viewsets
+from .restful import TweetSerializer
+
+
+class TimelineView(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    serializer_class = TweetSerializer
+
+    def get_queryset(self):
+        return Tweet.objects.all().order_by('-date_joined')
 
 
 class LabelDetailView(DetailView):
