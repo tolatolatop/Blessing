@@ -8,7 +8,7 @@ import shlex
 import subprocess as sp
 
 from .models import Search
-from comments.models import Tweet
+from comments.models import LogData
 
 
 def call_snscrape(model: Search):
@@ -22,7 +22,7 @@ def call_snscrape(model: Search):
     raise RuntimeError(' '.join(cmd), err)
 
 
-def clean_tweet_data(t):
+def clean_log_data(t):
     t["username"] = t["user"]["username"]
     t['t_id'] = t['id']
     for i in ['id', '_type', 'renderedContent', 'user', 'conversationId', 'lang', 'source', 'sourceUrl', 'sourceLabel',
@@ -32,16 +32,16 @@ def clean_tweet_data(t):
     return t
 
 
-def save_tweet(search_obj, tweet_list):
+def save_log_data(search_obj, log_data_collect):
     res = []
-    for t in tweet_list:
+    for t in log_data_collect:
         # bad code
-        t = clean_tweet_data(t)
+        t = clean_log_data(t)
         t['search'] = search_obj
         update_id = {
             'url': t['url'],
             't_id': t['t_id']
         }
-        obj = Tweet.objects.update_or_create(defaults=t, **update_id)
+        obj = LogData.objects.update_or_create(defaults=t, **update_id)
         res.append(obj)
     return res

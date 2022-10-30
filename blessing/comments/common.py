@@ -12,7 +12,7 @@ import xlsxwriter
 from django.http import FileResponse
 from django.conf import settings
 
-from .models import Tweet, Report
+from .models import LogData, Branch
 
 
 def read_headers(file_path):
@@ -24,11 +24,11 @@ def read_headers(file_path):
     return data
 
 
-def export_excel(request, report_id):
-    report_obj = Report.objects.filter(pk=report_id).first()
+def export_excel(request, branch_id):
+    report_obj = Branch.objects.filter(pk=branch_id).first()
     saved_filter = request.session.get("saved_filter", {})
-    tweets = Tweet.objects.filter(search=report_obj.search, **saved_filter)
-    buffer = create_report("tweet_info.json", tweets)
+    log_data_collect = LogData.objects.filter(branch=report_obj.upstream, **saved_filter)
+    buffer = create_report("log_data_info.json", log_data_collect)
     return FileResponse(buffer, as_attachment=True, filename='report.xlsx')
 
 
@@ -44,8 +44,8 @@ def create_report(header_file, data):
     for row, t in enumerate(data, start=1):
         for col, h in enumerate(headers):
             worksheet.write(row, col, str(getattr(t, h)))
-        if t.last_comments is not None:
-            worksheet.write(row, len_headers, t.last_comments.description)
+        if t.last_comment is not None:
+            worksheet.write(row, len_headers, t.last_comment.description)
     workbook.close()
     buffer.seek(0)
 

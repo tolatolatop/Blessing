@@ -2,14 +2,14 @@
 <p>{{ search.query }}</p>
 <p>modified: {{ search.modified }}</p>
 <h1>Result</h1>
-{% if tweets %}
+{% if log_data_collect %}
 <ul>
-{% for tweet in tweets %}
+{% for log_data in log_data_collect %}
   <li>
-    <a href="{{ tweet.url }}">{{ tweet.url }}</a> ({{tweet.username}} - {{tweet.last_comments.type}})
+    <a href="{{ log_data.url }}">{{ log_data.url }}</a> ({{log_data.username}} - {{log_data.last_comments.type}})
   </li>
 {% endfor %}
 </ul>
 {% else %}
-<p>There are no tweet in the database.</p>
+<p>There are no log_data in the database.</p>
 {% endif %}

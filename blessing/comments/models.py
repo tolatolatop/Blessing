@@ -1,22 +1,17 @@
 from django.db import models
 
-from sns.models import Search
 
-
-# Create your models here.
-class LabelModel(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-    type = models.CharField(max_length=10)
-    description = models.CharField(max_length=255, blank=True)
+class Branch(models.Model):
+    name = models.CharField(max_length=48, blank=True, default='')
+    path = models.CharField(max_length=128)
 
 
 class Comment(models.Model):
-    name = models.CharField(max_length=30, unique=True)
     type = models.CharField(max_length=10)
     description = models.CharField(max_length=255, blank=True)
 
 
-class Tweet(models.Model):
+class LogData(models.Model):
     url = models.CharField(max_length=1024, unique=True)
     date = models.DateTimeField()
     content = models.TextField(blank=True)
@@ -27,20 +22,16 @@ class Tweet(models.Model):
     likeCount = models.IntegerField()
     quoteCount = models.IntegerField()
     media = models.JSONField(null=True)
-    search = models.ForeignKey(Search, on_delete=models.CASCADE)
-    last_comments = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    last_comment = models.ForeignKey(Comment, on_delete=models.SET_NULL, null=True)
 
     @property
     def comment_type(self):
-        if self.last_comments is not None:
-            return self.last_comments.type
-        return ""
+        if self.last_comment is not None:
+            return self.last_comment.type
+        return "待确认"
 
 
 class Link(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
-
-
-class Report(models.Model):
-    search = models.ForeignKey(Search, on_delete=models.CASCADE)
+    log_data = models.ForeignKey(LogData, on_delete=models.CASCADE)

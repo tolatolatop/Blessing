@@ -6,15 +6,15 @@
 from collections import OrderedDict
 
 from rest_framework import serializers
-from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
-from .models import Tweet
+from .models import LogData
 
 
-class TweetSerializer(serializers.HyperlinkedModelSerializer):
+class LogDataSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Tweet
+        model = LogData
         fields = ['id', 'comment_type', 'url', 'username', 'date', 'content', 'likeCount']
 
 

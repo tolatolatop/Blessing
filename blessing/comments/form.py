@@ -5,10 +5,9 @@
 # @File    : form.py
 from ruamel.yaml import YAML
 from django import forms
-from django.urls import reverse_lazy, reverse
 from django.conf import settings
 
-from .models import Comment, Link, Tweet
+from .models import Comment, Link, LogData
 
 
 class CommentForm(forms.Form):
@@ -18,27 +17,26 @@ class CommentForm(forms.Form):
     links = forms.CharField(max_length=2048)
 
     def create_comment(self):
-        name = self.cleaned_data['name']
         comment_type = self.cleaned_data['type']
         description = self.cleaned_data['description']
         links = self.cleaned_data['links']
-        comment = Comment(name=name, type=comment_type, description=description)
+        comment = Comment(type=comment_type, description=description)
         t_ids = [int(i) for i in links.split(',')]
-        tweets = Tweet.objects.filter(pk__in=t_ids)
+        log_data_collect = LogData.objects.filter(pk__in=t_ids)
 
         links = []
-        for tweet in tweets:
-            link = Link(comment=comment, tweet=tweet)
+        for log_data in log_data_collect:
+            link = Link(comment=comment, log_data=log_data)
             links.append(link)
-        for tweet in tweets:
-            tweet.last_comments = comment
+        for log_data in log_data_collect:
+            log_data.last_comment = comment
 
         comment.save()
         for link in links:
             link.save()
 
-        for tweet in tweets:
-            tweet.save()
+        for log_data in log_data_collect:
+            log_data.save()
         return True
 
 
@@ -65,7 +63,7 @@ class YamlForm(forms.Form):
 
 
 class FilterForm(YamlForm):
-    yaml_path = settings.STATIC_DIR / "tweet_filter.yaml"
+    yaml_path = settings.STATIC_DIR / "log_data_filter.yaml"
 
     def __init__(self, init_value: dict, *args, **kwargs):
         super(FilterForm, self).__init__(self.yaml_path, init_value, *args, **kwargs)

@@ -9,20 +9,20 @@ from django.views.generic import FormView
 from rest_framework import viewsets
 
 from .form import CommentForm, FilterForm, TimelineCommentForm
-from .models import Tweet
-from .restful import TweetSerializer, StandardResultsSetPagination
+from .models import LogData
+from .restful import LogDataSerializer, StandardResultsSetPagination
 
 
 class TimelineView(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    serializer_class = TweetSerializer
+    serializer_class = LogDataSerializer
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         saved_filter = self.request.session.get("saved_filter", {})
-        return Tweet.objects.filter(**saved_filter)
+        return LogData.objects.filter(**saved_filter)
 
 
 class CommentFormView(FormView):
@@ -39,10 +39,9 @@ class CommentFormView(FormView):
 
 
 def timeline(request):
-    tweet_info_file = settings.STATIC_DIR / "tweet_info.json"
-    with open(tweet_info_file, "r") as f:
+    log_data_path = settings.STATIC_DIR / "log_data_info.json"
+    with open(log_data_path, "r") as f:
         headers = json.load(f)
-    filter_data = settings.STATIC_DIR / "tweet_filter.yaml"
 
     saved_filter = request.session.get("saved_filter", {})
 
