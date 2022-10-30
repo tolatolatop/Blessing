@@ -46,8 +46,7 @@ class CommentFormView(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.create_comment()
-        super().form_valid(form)
-        return HttpResponseRedirect(success_url)
+        return super().form_valid(form)
 
 
 def timeline(request, branch_id):
