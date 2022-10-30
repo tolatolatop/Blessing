@@ -1,7 +1,7 @@
 import json
 
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -23,7 +23,8 @@ class TimelineView(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        return Tweet.objects.all()
+        saved_filter = self.request.session.get("saved_filter", {})
+        return Tweet.objects.filter(**saved_filter)
 
 
 class LabelDetailView(DetailView):
@@ -73,11 +74,20 @@ def timeline(request):
         headers = json.load(f)
     filter_data = settings.STATIC_DIR / "tweet_filter.yaml"
 
+    saved_filter = request.session.get("saved_filter", {})
+
     context = {
         'headers': headers,
         'data_url': reverse('timeline'),
-        'filter_form': FilterForm(filter_data),
+        'filter_form': FilterForm(filter_data, saved_filter),
         'comment_form': ReportCommentForm()
     }
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'comments/test_page.html', context=context)
+
+
+def save_filter(request):
+    if request.is_ajax():
+        if request.method == 'POST':
+            request.session["saved_filter"] = request.body
+    return HttpResponse("OK")

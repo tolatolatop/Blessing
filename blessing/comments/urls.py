@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import LabelDetailView, CommentFormView, ReportDetailView, TimelineView, timeline
+from .views import LabelDetailView, CommentFormView, ReportDetailView, TimelineView, timeline, save_filter
 from .common import export_excel
 
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
     path('report/<int:report_id>/excel', export_excel, name='report-excel'),
     path('report/test', timeline, name='test_page'),
     path('timeline', TimelineView.as_view({'get': 'list'}), name='timeline'),
+    path('save_filter', save_filter, name='save-filter'),
 ]

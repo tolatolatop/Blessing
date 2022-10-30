@@ -50,7 +50,7 @@ class ReportCommentForm(CommentForm):
 
 class FilterForm(forms.Form):
 
-    def __init__(self, file, *args, **kwargs):
+    def __init__(self, file, init_value: dict, *args, **kwargs):
         super().__init__(*args, **kwargs)
         yaml = YAML()
         with open(file, 'r') as f:
@@ -59,7 +59,12 @@ class FilterForm(forms.Form):
             field_name = field["name"]
             label = field["label"]
             if field["type"] == "text":
-                self.fields[field_name] = forms.CharField(label=label, required=False)
-            if field["type"] == "choice":
+                field_obj = forms.CharField(label=label, required=False)
+                field_obj.initial = init_value.get(field_name, "")
+            elif field["type"] == "choice":
                 choices = field["data"]
-                self.fields[field_name] = forms.ChoiceField(label=label, choices=choices)
+                field_obj = forms.ChoiceField(label=label, choices=choices)
+                field_obj.initial = init_value.get(field_name, "")
+            else:
+                field_obj = None
+            self.fields[field_name] = field_obj

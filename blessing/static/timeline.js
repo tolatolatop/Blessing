@@ -7,3 +7,23 @@ $('#submitModel').on('show.bs.modal', function (event) {
   modal.find('.modal-title').text('New message to ' + recipient)
   modal.find('.modal-body input').val(recipient)
 })
+
+
+function save_filter() {
+    var filter_data = {
+        username: 'YDPFALION',
+        content__contains: '動画'
+    };
+    $.ajax({
+        url: '/comments/filter',
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        data: $.toJSON(filter_data),
+        dataType: 'text',
+        success: function(result) {
+            alert(result.Result);
+            $('#filterModel').modal('dispose');
+        }
+    });
+}
+
