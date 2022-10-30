@@ -2,6 +2,7 @@ import pathlib
 
 from django.db import models
 import pandas as pd
+from django_filters.conf import settings
 
 
 def load_excel_local(branch, file_path: pathlib.Path):
@@ -18,7 +19,8 @@ class Branch(models.Model):
     path = models.CharField(max_length=128)
 
     def save(self, *args, **kwargs):
-        load_excel_local(self, self.path)
+        file: pathlib.Path = settings.DATA_DIR / self.path
+        load_excel_local(self, file)
         res = super(Branch, self).save(*args, **kwargs)
         return res
 
