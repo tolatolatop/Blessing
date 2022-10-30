@@ -9,5 +9,5 @@ urlpatterns = [
     path('report/<int:pk>', ReportDetailView.as_view(), name='report-detail'),
     path('report/<int:report_id>/excel', export_excel, name='report-excel'),
     path('report/test', TestPageView.as_view(), name='test_page'),
-    path('timeline', TimelineView.as_view(), name='timeline'),
+    path('timeline', TimelineView.as_view({'get': 'list'}), name='timeline'),
 ]
