@@ -15,7 +15,7 @@ function save_filter() {
         content__contains: '動画'
     };
     $.ajax({
-        url: '/comments/filter',
+        url: '/comments/save_filter',
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
         data: filter_data,

@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpRequest, HttpRes
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 from django.conf import settings
@@ -86,6 +87,7 @@ def timeline(request):
     return render(request, 'comments/test_page.html', context=context)
 
 
+@csrf_exempt
 def save_filter(request):
     if request.is_ajax():
         if request.method == 'POST':
