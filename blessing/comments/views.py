@@ -21,35 +21,39 @@ class TimelineView(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
+        branch_id = self.request.GET.get("branch_id")
         saved_filter = self.request.session.get("saved_filter", {})
-        return LogData.objects.filter(**saved_filter)
+        return LogData.objects.filter(branch=branch_id, **saved_filter)
 
 
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'
     form_class = CommentForm
-    success_url = 'timeline'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         form.create_comment()
         super().form_valid(form)
-        return HttpResponseRedirect(self.success_url)
+        success_url = reverse("comment-form")
+        return HttpResponseRedirect(success_url)
 
 
-def timeline(request):
+def timeline(request, branch_id):
     log_data_path = settings.STATIC_DIR / "log_data_info.json"
     with open(log_data_path, "r") as f:
         headers = json.load(f)
 
     saved_filter = request.session.get("saved_filter", {})
+    data_url = reverse('timeline', kwargs={"branch_id": branch_id})
+    filter_form = FilterForm(saved_filter)
+    timeline_comment_form = TimelineCommentForm()
 
     context = {
         'headers': headers,
-        'data_url': reverse('timeline'),
-        'filter_form': FilterForm(saved_filter),
-        'comment_form': TimelineCommentForm()
+        'data_url': data_url,
+        'filter_form': filter_form,
+        'comment_form': timeline_comment_form
     }
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'comments/index.html', context=context)
