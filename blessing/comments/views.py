@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
@@ -64,29 +65,31 @@ class ReportDetailView(DetailView):
 
 
 def timeline(request):
+    headers = [
+        {
+            "field": "id",
+            "title": "ID"
+        },
+        {
+            "field": "username",
+            "title": "用户名"
+        },
+        {
+            "field": "date",
+            "title": "日期"
+        },
+        {
+            "field": "content",
+            "title": "内容"
+        },
+        {
+            "field": "likeCount",
+            "title": "点赞数"
+        }
+    ]
     context = {
-        'headers': [
-            {
-                "field": "id",
-                "title": "ID"
-            },
-            {
-                "field": "username",
-                "title": "用户名"
-            },
-            {
-                "field": "date",
-                "title": "日期"
-            },
-            {
-                "field": "content",
-                "title": "内容"
-            },
-            {
-                "field": "likeCount",
-                "title": "点赞数"
-            }
-        ]
+        'headers': headers,
+        'data_url': reverse('timeline')
     }
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'comments/test_page.html', context=context)
