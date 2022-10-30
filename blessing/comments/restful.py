@@ -15,7 +15,7 @@ from .models import Tweet
 class TweetSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tweet
-        fields = ['id', 'comment_type', 'url', 'username', 'date', 'content']
+        fields = ['id', 'comment_type', 'url', 'username', 'date', 'content', 'likeCount']
 
 
 class StandardResultsSetPagination(LimitOffsetPagination):
