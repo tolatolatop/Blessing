@@ -1,0 +1,12 @@
+- name: username
+  type: choice
+  label: 用户名
+  data:
+    - YDPFALION
+    - da_yuri326
+    - kagurameazz
+    - Icarus_mea
+    - Ytaieyu
+- name: content
+  label: 内容
+  type: text

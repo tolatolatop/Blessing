@@ -3,6 +3,7 @@
 # @Time    : 2022/10/23 20:29
 # @Author  : tolatolatop
 # @File    : form.py
+from ruamel.yaml import YAML
 from django import forms
 from django.urls import reverse_lazy, reverse
 
@@ -49,8 +50,16 @@ class ReportCommentForm(CommentForm):
 
 class FilterForm(forms.Form):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, file, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for i in range(10):
-            field_name = "field_name_%d" % i
-            self.fields[field_name] = forms.CharField(required=False)
+        yaml = YAML()
+        with open(file, 'w') as f:
+            field_list = yaml.load(f)
+        for field in field_list:
+            field_name = field["name"]
+            label = field["label"]
+            if field["type"] == "text":
+                self.fields[field_name] = forms.CharField(label=label, required=False)
+            if field["type"] == "choice":
+                choices = field["data"]
+                self.fields[field_name] = forms.ChoiceField(label=label, choices=choices)
