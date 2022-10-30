@@ -36,16 +36,6 @@ class BranchView(viewsets.ModelViewSet):
     queryset = Branch.objects.all()
     serializer_class = BranchSerializer
 
-    def create(self, request, *args, **kwargs):
-        file: pathlib.Path = settings.DATA_DIR / request.POST.get("path")
-        if file.exists():
-            res = super(BranchView, self).create(request, *args, **kwargs)
-            obj = self.get_object()
-            load_excel_local(obj, file)
-            return res
-        else:
-            raise Http404
-
 
 class CommentFormView(FormView):
     template_name = 'comments/comment.html'

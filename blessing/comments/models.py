@@ -1,9 +1,26 @@
+import pathlib
+
 from django.db import models
+import pandas as pd
+
+
+def load_excel_local(branch, file_path: pathlib.Path):
+    df = pd.read_excel(file_path, index_col=0)
+    for i in df.index:
+        data = df.loc[i].to_dict()
+        data['branch'] = branch
+        LogData.objects.update_or_create(defaults=data, url=data["url"])
+    return True
 
 
 class Branch(models.Model):
     name = models.CharField(max_length=48, blank=True, default='')
     path = models.CharField(max_length=128)
+
+    def save(self, *args, **kwargs):
+        load_excel_local(self, self.path)
+        res = super(Branch, self).save(*args, **kwargs)
+        return res
 
 
 class Comment(models.Model):
