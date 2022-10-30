@@ -18,8 +18,8 @@ function save_filter() {
         url: '/comments/filter',
         type: 'POST',
         contentType: 'application/json; charset=utf-8',
-        data: $.toJSON(filter_data),
-        dataType: 'text',
+        data: filter_data,
+        dataType: 'json',
         success: function(result) {
             alert(result.Result);
             $('#filterModel').modal('dispose');
