@@ -22,7 +22,7 @@
       <tr>
         <th data-field="state" data-checkbox="true"></th>
         {% for header in headers %}
-          <th data-field="header.field">header.title</th>
+          <th data-field="{{ header.field }}">{{ header.title }}</th>
         {% endfor %}
       </tr>
     </thead>
