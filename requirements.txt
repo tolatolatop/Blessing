@@ -9,3 +9,5 @@ django-filter
 ruamel.yaml
 pandas~=1.5.1
 openpyxl~=3.0.10
+requests~=2.28.1
+SQLAlchemy~=1.4.43
